@@ -14,6 +14,7 @@ const routes: Routes = [
   {path:'home', component : HomeComponent},  
   {path:'collection-point', component : CollectionPointsComponent ,children:[
     {path:'', component : CollectionPointsStartComponent},  
+    {path:'new', component: CollectionPointsEditComponent },
     {path:':id', component : CollectionPointsDetailComponent},  
     {path:'list', component : CollectionPointsListComponent},  
     {path:':id/edit', component : CollectionPointsEditComponent},  

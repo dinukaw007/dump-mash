@@ -1,83 +1,81 @@
 <div class="row">
   <div class="col-md-12">
     <form [formGroup]="collectionPointForm" (ngSubmit)="onSubmit()">
-      <div class="row">
-        <div class="col-md-12">
-            <div class="btn-toolbar">
-                <button type="submit"[disabled]="!collectionPointForm.valid" class="btn btn-success btn-sm" style="margin-right: 5px">Save</button>
-                <button type="button" class="btn btn-danger btn-sm" (click)="onCancel()">Cancel</button>
-              </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="btn-toolbar">
+          <button type="submit" [disabled]="!collectionPointForm.valid" class="btn btn-success btn-sm" style="margin-right: 5px">Save</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="onCancel()">Cancel</button>
         </div>
       </div>
-
-      <hr>
-      <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="name">Collector</label>
-              <input type="text" id="collector" name="collector" class="form-control" formControlName="collector">
-            </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Collector</label>
+          <input type="text" id="collector" name="collector" class="form-control" formControlName="collector">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Address</label>
+          <input type="text" id="address" name="address" class="form-control" formControlName="address">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Latitude</label>
+          <input type="number" id="latitude" name="latitude" class="form-control" formControlName="latitude">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Longitude</label>
+          <input type="number" id="longitude" name="longitude" class="form-control" formControlName="longitude">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <button class="btn btn-success btn-sm" type="button" (click)="onAddContactDetails()">Add Contact Details</button>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-success  btn-sm" type="button" (click)="onAddCollectableMaterials()">Add Collectable
+          Material</button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-lg-6" formArrayName="contactDetails">
+        <label>Contact Details</label>
+        <div class="input-group mb-3" *ngFor="let contactDetailsCtrl of getContactDetailsControls(); let i = index"
+          [formGroupName]="i">
+          <input type="text" class="form-control" formControlName="contact" aria-label="Small" placeholder="Add phone number"
+            aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-danger" (click)="onDeleteContactDetails(i)" type="button">X</button>
           </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="name">Address</label>
-                <input type="text" id="address" name="address" class="form-control" formControlName="address">
-              </div>
-            </div>
+      </div>
+      <div class="col-lg-6" formArrayName="collectableMaterials">
+        <label>Collectable Materials</label>
+        <div class="input-group mb-3" *ngFor="let collectableMaterialsCtrl of getCollectableMaterialsControls(); let x = index"
+          [formGroupName]="x">
+          <input type="text" class="form-control" formControlName="collectable-material" aria-label="Small" placeholder="Collectable"
+            aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-danger" (click)="onDeleteCollectableMaterials(x)" type="button">X</button>
           </div>
-
-
-          <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="name">Latitude</label>
-                  <input type="number" id="latitude" name="latitude" class="form-control" formControlName="latitude">
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="name">Longitude</label>
-                    <input type="number" id="longitude" name="longitude" class="form-control" formControlName="longitude">
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                    <button class="btn btn-success btn-sm" type="button">Add Contact Details</button>
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-success  btn-sm" type="button">Add Collectable Material</button>
-                  </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col-lg-6">
-                  <label>Contact Details</label>
-                  <div class="input-group mb-3">
-                      <input type="text" class="form-control" aria-label="Small" placeholder="Add phone number" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-danger" type="button">X</button>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-lg-6"> 
-                    <label>Collectable Materials</label>                                     
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" aria-label="Small" placeholder="Collectable" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-danger" type="button">X</button>
-                        </div>
-                      </div>
-                </div>
-              </div>
-
+        </div>
+      </div>
+    </div>
     </form>
   </div>
 </div>
