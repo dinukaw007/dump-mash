@@ -12,7 +12,7 @@ export class CollectionPointsListComponent implements OnInit, OnDestroy {
   collectionPointSubscription: Subscription;
   constructor(private collectionPointservice: CollectionPointservice, private router: Router, private route: ActivatedRoute) { }
   collectionPoints: CollectionPoint[]
-
+  finterdStatus :string = '';
 
 
   ngOnInit() {

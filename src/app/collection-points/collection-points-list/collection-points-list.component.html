@@ -10,8 +10,9 @@
       <div class="form-group">
         <input class="form-control" type="text" placeholder="Enter Location" style="margin-right:5px">
         <select class="form-control">
-          <option>All Recyclable Items</option>
-          <option>PP</option>
+          <option value="All Recyclable Items">All Recyclable Items</option>
+          <option value="PP">PP</option>
+          <option value="HDP">HDP</option>          
         </select>
       </div>
     </form>
@@ -20,7 +21,7 @@
  
   <div class="col-lg-12">
     <div style="height:400px; overflow-y: scroll">
-        <app-collection-points-item *ngFor="let collectionPoint of collectionPoints; let i=index" [collectionPoint]="collectionPoint"
+        <app-collection-points-item *ngFor="let collectionPoint of collectionPoints; let i=index " [collectionPoint]="collectionPoint"
         [index]="i"></app-collection-points-item>
     </div>
     

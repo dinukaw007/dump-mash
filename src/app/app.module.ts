@@ -14,13 +14,14 @@ import { CollectionPointsDetailComponent } from './collection-points/collection-
 import { CollectionPointsStartComponent } from './collection-points/collection-points-start/collection-points-start.component';
 import { CollectionPointsItemComponent } from './collection-points/collection-points-list/collection-points-item/collection-points-item.component';
 import { CollectionPointservice } from './collection-points/collection-points.service';
+import { FilterPipe } from './shared/filter.pipe';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,    
-    CollectionPointsComponent, HomeComponent, AboutComponent, ContactComponent, CollectionPointsListComponent, CollectionPointsEditComponent, CollectionPointsDetailComponent, CollectionPointsStartComponent, CollectionPointsItemComponent    
+    CollectionPointsComponent, HomeComponent, AboutComponent, ContactComponent, CollectionPointsListComponent, CollectionPointsEditComponent, CollectionPointsDetailComponent, CollectionPointsStartComponent, CollectionPointsItemComponent, FilterPipe    
   ],
   imports: [
     BrowserModule,
