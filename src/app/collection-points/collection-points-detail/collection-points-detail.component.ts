@@ -9,6 +9,7 @@ import { CollectionPoint } from '../collection-point.model';
   styleUrls: ['./collection-points-detail.component.css']
 })
 export class CollectionPointsDetailComponent implements OnInit {
+ 
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
 
