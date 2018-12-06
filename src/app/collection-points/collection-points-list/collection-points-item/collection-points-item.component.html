@@ -1,0 +1,15 @@
+<a style="cursor: pointer; margin-bottom: 5px" class="list-group-item clearfix" routerLinkActive="active" [routerLink]="[index]">
+    <span class="pull-right">
+        <img src="../../../../assets/img/dafault_image.png" alt="{{collectionPoint.collector}}" class="img-responsive"
+          style="max-height: 90px;">
+      </span>
+  <div class="row">
+    <div class="pull-left" style="padding-right: 20px">
+      <h6 class="list-group-item-heading">{{collectionPoint.collector}}</h6>
+      <p class="list-group-item-text">{{collectionPoint.collectableMaterials}}</p>
+    </div>  
+  </div>
+  <div class="row">
+    <p style="padding: 0; margin: 0;">{{collectionPoint.address}}</p>
+  </div>
+</a>

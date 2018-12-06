@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-xs-12" style="padding-left: 15px">
+    <button class="btn btn-success btn-sm" (click)="onNewCollectionPoint()">New Collection Point</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-lg-12">
+    <form class="form-inline">
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="Enter Location" style="margin-right:5px">
+        <select class="form-control">
+          <option>All Recyclable Items</option>
+          <option>PP</option>
+        </select>
+      </div>
+    </form>
+    <br>
+  </div>
+ 
+  <div class="col-lg-12">
+    <div style="height:400px; overflow-y: scroll">
+        <app-collection-points-item *ngFor="let collectionPoint of collectionPoints; let i=index" [collectionPoint]="collectionPoint"
+        [index]="i"></app-collection-points-item>
+    </div>
+    
+  </div>
+</div>
