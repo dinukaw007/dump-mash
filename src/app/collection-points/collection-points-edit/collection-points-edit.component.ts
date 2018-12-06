@@ -29,12 +29,17 @@ export class CollectionPointsEditComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.editMode){
+      this.collectionPointservice.updateCollectionPoints(this.id,this.collectionPointForm.value);
+    }else{
+      this.collectionPointservice.addCollectionPoint(this.collectionPointForm.value);
+    }
+    this.onCancel();
   }
 
   onCancel() {
     this.router.navigate(['../'],{relativeTo:this.route});
   }
-
 
   getContactDetailsControls() {
     return (<FormArray>this.collectionPointForm.get('contactDetails')).controls;
@@ -64,7 +69,7 @@ export class CollectionPointsEditComponent implements OnInit {
         for(let contactDetail of collectionPoints.contactDetails){
           contactDetails.push(
             new FormGroup({
-              'contact' : new FormControl(contactDetail, Validators.required),              
+              'contact' : new FormControl(contactDetail.contact, Validators.required),              
             })
           );
         }
@@ -73,7 +78,7 @@ export class CollectionPointsEditComponent implements OnInit {
         for(let collectableMaterial of collectionPoints.collectableMaterials){
           collectableMaterials.push(
             new FormGroup({
-              'collectable-material' : new FormControl(collectableMaterial, Validators.required),              
+              'collectable_material' : new FormControl(collectableMaterial.collectable_material, Validators.required),              
             })
           );
         }
