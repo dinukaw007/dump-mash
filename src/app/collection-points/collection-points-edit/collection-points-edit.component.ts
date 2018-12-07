@@ -1,3 +1,4 @@
+import { DataStorageService } from './../../shared/data.storage.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -11,7 +12,7 @@ import { CollectionPointservice } from './../collection-points.service';
 export class CollectionPointsEditComponent implements OnInit {
 
   constructor(private route : ActivatedRoute,     
-    private router : Router , private collectionPointservice : CollectionPointservice) { }
+    private router : Router , private collectionPointservice : CollectionPointservice ,private dataStorageService : DataStorageService) { }
 
     id : number;
     editMode : boolean = false;
@@ -31,8 +32,18 @@ export class CollectionPointsEditComponent implements OnInit {
   onSubmit() {
     if(this.editMode){
       this.collectionPointservice.updateCollectionPoints(this.id,this.collectionPointForm.value);
+      this.dataStorageService.storeCollectionPoints().subscribe(
+        (response : Response)=>{
+          console.log(response);
+        }
+      );
     }else{
       this.collectionPointservice.addCollectionPoint(this.collectionPointForm.value);
+      this.dataStorageService.storeCollectionPoints().subscribe(
+        (response : Response)=>{
+          console.log(response);
+        }
+      );
     }
     this.onCancel();
   }

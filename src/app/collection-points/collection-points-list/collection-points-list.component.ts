@@ -1,8 +1,10 @@
+import { DataStorageService } from './../../shared/data.storage.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CollectionPoint } from '../collection-point.model';
 import { CollectionPointservice } from '../collection-points.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-collection-points-list',
   templateUrl: './collection-points-list.component.html',
@@ -10,18 +12,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CollectionPointsListComponent implements OnInit, OnDestroy {
   collectionPointSubscription: Subscription;
-  constructor(private collectionPointservice: CollectionPointservice, private router: Router, private route: ActivatedRoute) { }
-  collectionPoints: CollectionPoint[]
+  constructor(private collectionPointservice: CollectionPointservice, private router: Router, private route: ActivatedRoute, private dataStorageService : DataStorageService) { }
+  collectionPoints: CollectionPoint[];
   finterdStatus :string = '';
-
+  isDataAvailable:boolean = false;
 
   ngOnInit() {
     this.collectionPointSubscription = this.collectionPointservice.collectionPointChanged.subscribe(
       (collectionPoints: CollectionPoint[]) => {
         this.collectionPoints = collectionPoints;
+        this.isDataAvailable = true;
       }
     );
-    this.collectionPoints = this.collectionPointservice.getCollectionPoints();
+    //his.collectionPoints = this.collectionPointservice.getCollectionPoints();
+    this.dataStorageService.getCollectionPoints()
+  }
+
+  onFetchData(){
+    this.dataStorageService.getCollectionPoints();
   }
 
   onNewCollectionPoint() {

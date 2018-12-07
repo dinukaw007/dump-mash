@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="btn-toolbar">
-            <button type="submit" [disabled]="collectionPointForm.valid" class="btn btn-success btn-sm" style="margin-right: 5px">Save</button>
+            <button type="submit" [disabled]="!collectionPointForm.valid" class="btn btn-success btn-sm" style="margin-right: 5px">Save</button>
             <button type="button" class="btn btn-danger btn-sm" (click)="onCancel()">Cancel</button>
           </div>
         </div>
