@@ -5,11 +5,11 @@ import 'firebase/auth';
 //import 'firebase/auth';
 @Injectable()
 export class AuthService {
-
+    token: string = '';
     constructor(private router: Router) {
 
     }
-    token: string = ""
+   
     signupUser(name: string, email: string, password: string) {
         firebase.auth().createUserWithEmailAndPassword(email, password).catch(
             error => {
@@ -20,11 +20,11 @@ export class AuthService {
 
     signinUser(email: string, password: string) {
         firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(response => {
-                this.router.navigate(['/']);
+            .then(response => {               
                 firebase.auth().currentUser.getIdToken().then(
-                    (tok: string) => {
-                        this.token = tok;
+                    (token: string) => {
+                        this.token = token;
+                        this.router.navigate(['/']);
                     }
                 );
             })
@@ -43,16 +43,30 @@ export class AuthService {
     }
 
     getToken() {
-        firebase.auth().currentUser.getIdToken().then(
-            (tok: string) => {
-                this.token = tok;
-            }
-        );
+        // firebase.auth().onAuthStateChanged(function (user) {
+        //     if (user) {
+        //         user.getIdToken().then(function (data) {
+        //             console.log(data)
+        //         });
+        //     }
+        // });
+        firebase.auth().currentUser.getIdToken()
+            .then(
+                token => this.token = token
+            )
         return this.token;
+
+
     }
 
     isAuthenticated() {
-        return this.token != null;
+        
+        if(this.token === '' || this.token === null){
+            return false;
+        }else{
+            return true;
+        }
+        
     }
 
     logout() {

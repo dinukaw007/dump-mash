@@ -12,8 +12,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class CollectionPointsDetailComponent implements OnInit {
  
   @ViewChild('gmap') gmapElement: any;
-  map: google.maps.Map;
-
+  map: google.maps.Map;  
   id:number;
   @Input() collectionPoint: CollectionPoint;
   constructor(private route : ActivatedRoute,
@@ -39,16 +38,24 @@ export class CollectionPointsDetailComponent implements OnInit {
           var myLatLng = {lat: this.collectionPoint.latitude, lng: this.collectionPoint.longitude};  
           
           this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-    
+
+          //var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+          var image = '../../../assets/img/bio_garbage_bag_map.png';         
+          
           var marker = new google.maps.Marker({
             position: myLatLng,
             map: this.map ,
-            title: 'Hello World!'
-          });      
+            animation: google.maps.Animation.DROP,
+            title: this.collectionPoint.address,
+            icon:image
+          });  
+                    
         }   
       }
     );
   }
+
+    
 
   ngAfterViewInit(){
   }

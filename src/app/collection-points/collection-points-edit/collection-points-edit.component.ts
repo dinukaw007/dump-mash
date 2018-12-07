@@ -69,6 +69,8 @@ export class CollectionPointsEditComponent implements OnInit {
   private intiForm() {
     let collector = '';
     let address = '';
+    let city = '';
+    let province = '';
     let latitude = 0;
     let longitude = 0;
     let imgPath = '';
@@ -84,6 +86,8 @@ export class CollectionPointsEditComponent implements OnInit {
       } else {
         collector = collectionPoints.collector;
         address = collectionPoints.address;
+        city = collectionPoints.city;
+        province = collectionPoints.province;
         latitude = collectionPoints.latitude;
         longitude = collectionPoints.longitude;
         imgPath = collectionPoints.imgPath;
@@ -112,6 +116,8 @@ export class CollectionPointsEditComponent implements OnInit {
     this.collectionPointForm = new FormGroup({
       'collector': new FormControl(collector, Validators.required),
       'address': new FormControl(address, Validators.required),
+      'city': new FormControl(city,),
+      'province': new FormControl(province,),
       'latitude': new FormControl(latitude),
       'longitude': new FormControl(longitude),
       'imgPath': new FormControl(imgPath),
