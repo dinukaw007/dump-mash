@@ -24,21 +24,29 @@ export class CollectionPointsDetailComponent implements OnInit {
         this.collectionPoint = this.collectionPointservice.getCollectionPointById(this.id);
         if(this.collectionPoint === null || this.collectionPoint === undefined){
                 this.router.navigate(['../'],{relativeTo:this.route})
-        }        
+        }
+        
+        if(this.collectionPoint){
+          var mapProp = {
+            center: new google.maps.LatLng(this.collectionPoint.latitude, this.collectionPoint.longitude),
+            zoom: 15,         
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var myLatLng = {lat: this.collectionPoint.latitude, lng: this.collectionPoint.longitude};  
+          
+          this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    
+          var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: this.map ,
+            title: 'Hello World!'
+          });      
+        }   
       }
     );
   }
 
   ngAfterViewInit(){
-    if(this.collectionPoint){
-      var mapProp = {
-        center: new google.maps.LatLng(this.collectionPoint.latitude, this.collectionPoint.longitude),
-        zoom: 15,         
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-    }    
-    
   }
 
   onEdit(){
