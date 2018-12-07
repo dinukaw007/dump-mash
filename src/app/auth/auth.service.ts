@@ -6,13 +6,15 @@ import 'firebase/auth';
 @Injectable()
 export class AuthService {
 
-    constructor(private router :Router){
-        
+    constructor(private router: Router) {
+
     }
     token: string = ""
     signupUser(name: string, email: string, password: string) {
         firebase.auth().createUserWithEmailAndPassword(email, password).catch(
-            error => console.log(error)
+            error => {
+                var errorMessage = error.message;
+            }
         )
     }
 
@@ -27,7 +29,16 @@ export class AuthService {
                 );
             })
             .catch(
-                error => console.log(error)
+                error => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    if (errorCode === 'auth/wrong-password') {
+                        alert('Wrong password.');
+                    } else {
+                        alert(errorMessage);
+                    }
+                    console.log(error);
+                }
             )
     }
 
@@ -40,11 +51,11 @@ export class AuthService {
         return this.token;
     }
 
-    isAuthenticated(){
+    isAuthenticated() {
         return this.token != null;
     }
 
-    logout(){
+    logout() {
         firebase.auth().signOut();
         this.router.navigate(['/signin']);
         this.token = null;
