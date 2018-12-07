@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CollectionPointservice } from './../collection-points.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-collection-points-edit',
@@ -12,7 +13,10 @@ import { CollectionPointservice } from './../collection-points.service';
 export class CollectionPointsEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-    private router: Router, private collectionPointservice: CollectionPointservice, private dataStorageService: DataStorageService) { }
+    private router: Router, 
+    private collectionPointservice: CollectionPointservice, 
+    private dataStorageService: DataStorageService,
+    public authService :AuthService) { }
 
   id: number;
   editMode: boolean = false;

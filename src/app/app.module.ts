@@ -19,13 +19,17 @@ import { FilterPipe } from './shared/filter.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { DataStorageService } from './shared/data.storage.service';
 import { LocationFilterPipe } from './shared/location-filter.pipe';
+import { SignupComponent } from './auth/signup/signup.component';
+import { SigninComponent } from './auth/signin/signin.component';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth-guard.service';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,    
-    CollectionPointsComponent, HomeComponent, AboutComponent, ContactComponent, CollectionPointsListComponent, CollectionPointsEditComponent, CollectionPointsDetailComponent, CollectionPointsStartComponent, CollectionPointsItemComponent, FilterPipe, LocationFilterPipe    
+    CollectionPointsComponent, HomeComponent, AboutComponent, ContactComponent, CollectionPointsListComponent, CollectionPointsEditComponent, CollectionPointsDetailComponent, CollectionPointsStartComponent, CollectionPointsItemComponent, FilterPipe, LocationFilterPipe, SignupComponent, SigninComponent    
   ],
   imports: [
     CommonModule,
@@ -36,7 +40,7 @@ import { LocationFilterPipe } from './shared/location-filter.pipe';
     ReactiveFormsModule,
     UiModule  
   ],
-  providers: [CollectionPointservice,DataStorageService],
+  providers: [CollectionPointservice,DataStorageService,AuthService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

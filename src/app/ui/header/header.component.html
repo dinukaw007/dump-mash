@@ -19,6 +19,16 @@
       <a class="nav-item nav-link cursor" target="_blank">
         <i class="fa fa-medium"></i>
       </a>
+
+      <ng-template [ngIf]="!authService.isAuthenticated()">
+        <a routerLinkActive="active" class="nav-item nav-link cursor" routerLink="/signup">Register</a>
+        <a routerLinkActive="active" class="nav-item nav-link cursor" routerLink="/signin">Login</a>
+      </ng-template>
+
+      <a (click)="logout()" class="nav-item nav-link cursor" style="cursor: pointer" *ngIf="authService.isAuthenticated()">Logout</a>
+      <!-- <ng-template [ngIf]="authService.isAuthenticated()">
+        <a routerLinkActive="active" class="nav-item nav-link cursor" routerLink="/logout">Logout</a>
+      </ng-template> -->
     </div>
   </div>
 </nav>

@@ -2,6 +2,7 @@ import { CollectionPointservice } from './../collection-points.service';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CollectionPoint } from '../collection-point.model';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-collection-points-detail',
@@ -15,7 +16,10 @@ export class CollectionPointsDetailComponent implements OnInit {
 
   id:number;
   @Input() collectionPoint: CollectionPoint;
-  constructor(private route : ActivatedRoute,private router : Router , private collectionPointservice : CollectionPointservice) { }
+  constructor(private route : ActivatedRoute,
+    private router : Router , 
+    private collectionPointservice : CollectionPointservice,
+    public authService :AuthService) { }
 
   ngOnInit() {   
     this.route.params.subscribe(

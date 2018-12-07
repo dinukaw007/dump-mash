@@ -4,6 +4,7 @@ import { CollectionPoint } from '../collection-point.model';
 import { CollectionPointservice } from '../collection-points.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-collection-points-list',
@@ -12,11 +13,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CollectionPointsListComponent implements OnInit, OnDestroy {
   collectionPointSubscription: Subscription;
-  constructor(private collectionPointservice: CollectionPointservice, private router: Router, private route: ActivatedRoute, private dataStorageService : DataStorageService) { }
+  constructor(private collectionPointservice: CollectionPointservice, 
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private dataStorageService: DataStorageService,
+    public authService :AuthService) { }
   collectionPoints: CollectionPoint[];
-  collectableMaterialsStatus :string = '';
-  locationValue :string = '';
-  isDataAvailable:boolean = false;
+  collectableMaterialsStatus: string = '';
+  locationValue: string = '';
+  isDataAvailable: boolean = false;
 
   ngOnInit() {
     this.collectionPointSubscription = this.collectionPointservice.collectionPointChanged.subscribe(
@@ -29,7 +34,7 @@ export class CollectionPointsListComponent implements OnInit, OnDestroy {
     this.dataStorageService.getCollectionPoints()
   }
 
-  onFetchData(){
+  onFetchData() {
     this.dataStorageService.getCollectionPoints();
   }
 
