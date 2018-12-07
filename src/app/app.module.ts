@@ -18,13 +18,14 @@ import { CollectionPointservice } from './collection-points/collection-points.se
 import { FilterPipe } from './shared/filter.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { DataStorageService } from './shared/data.storage.service';
+import { LocationFilterPipe } from './shared/location-filter.pipe';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,    
-    CollectionPointsComponent, HomeComponent, AboutComponent, ContactComponent, CollectionPointsListComponent, CollectionPointsEditComponent, CollectionPointsDetailComponent, CollectionPointsStartComponent, CollectionPointsItemComponent, FilterPipe    
+    CollectionPointsComponent, HomeComponent, AboutComponent, ContactComponent, CollectionPointsListComponent, CollectionPointsEditComponent, CollectionPointsDetailComponent, CollectionPointsStartComponent, CollectionPointsItemComponent, FilterPipe, LocationFilterPipe    
   ],
   imports: [
     CommonModule,

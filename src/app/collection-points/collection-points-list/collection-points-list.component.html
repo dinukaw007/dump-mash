@@ -9,7 +9,7 @@
   <div class="col-lg-12">
     <form class="form-inline">
       <div class="form-group">
-        <input class="form-control" type="text" placeholder="Enter Location" style="margin-right:5px">
+        <input class="form-control" [(ngModel)]="locationValue" [ngModelOptions]="{standalone: true}" type="text" placeholder="Enter Location" style="margin-right:5px">
         <select class="form-control" [(ngModel)]="collectableMaterialsStatus" [ngModelOptions]="{standalone: true}">
           <option value=""></option>
           <option value="All Recyclable Items">All Recyclable Items</option>
@@ -31,7 +31,7 @@
  
   <div class="col-lg-12">
     <div style="height:400px; overflow-y: scroll" *ngIf="isDataAvailable">
-        <app-collection-points-item  *ngFor="let collectionPoint of collectionPoints | collectableMaterialFilter:collectableMaterialsStatus:'collectableMaterials'; let i=index" [collectionPoint]="collectionPoint"
+        <app-collection-points-item  *ngFor="let collectionPoint of collectionPoints | collectableMaterialFilter:collectableMaterialsStatus:'collectableMaterials'| locationFilter:locationValue:'address'; let i=index" [collectionPoint]="collectionPoint"
         [index]="i"></app-collection-points-item>
     </div>
     

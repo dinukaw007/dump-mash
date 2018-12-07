@@ -15,6 +15,7 @@ export class CollectionPointsListComponent implements OnInit, OnDestroy {
   constructor(private collectionPointservice: CollectionPointservice, private router: Router, private route: ActivatedRoute, private dataStorageService : DataStorageService) { }
   collectionPoints: CollectionPoint[];
   collectableMaterialsStatus :string = '';
+  locationValue :string = '';
   isDataAvailable:boolean = false;
 
   ngOnInit() {
