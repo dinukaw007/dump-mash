@@ -46,24 +46,6 @@
             </div>
           </div>
         </div>
-
-      <!-- <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="name">Latitude</label>
-          <input type="number" id="latitude" name="latitude" class="form-control" formControlName="latitude">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="name">Longitude</label>
-          <input type="number" id="longitude" name="longitude" class="form-control" formControlName="longitude">
-        </div>
-      </div>
-    </div> -->
-
       <div class="row">
         <div class="col-md-6">
           <button class="btn btn-success btn-sm" type="button" (click)="onAddContactDetails()">Add Contact Details</button>
@@ -79,8 +61,7 @@
           <label>Contact Details</label>
           <div class="input-group mb-3" *ngFor="let contactDetailsCtrl of getContactDetailsControls(); let i = index"
             [formGroupName]="i">
-            <input type="text" class="form-control" formControlName="contact" aria-label="Small" placeholder="Add phone number"
-              aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input type="text" class="form-control" formControlName="contact" aria-label="Small" placeholder="Add phone number">
             <div class="input-group-append">
               <button class="btn btn-outline-danger" (click)="onDeleteContactDetails(i)" type="button">X</button>
             </div>
@@ -90,8 +71,7 @@
           <label>Collectable Materials</label>
           <div class="input-group mb-3" *ngFor="let collectableMaterialsCtrl of getCollectableMaterialsControls(); let x = index"
             [formGroupName]="x">
-            <input type="text" class="form-control" formControlName="collectable_material" aria-label="Small"
-              placeholder="Collectable" aria-label="Collectable material" aria-describedby="basic-addon2">
+            <input type="text" class="form-control" formControlName="collectable_material" aria-label="Small" placeholder="Add collectable">
             <div class="input-group-append">
               <button class="btn btn-outline-danger" (click)="onDeleteCollectableMaterials(x)" type="button">X</button>
             </div>

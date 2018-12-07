@@ -11,36 +11,36 @@ import { CollectionPointservice } from './../collection-points.service';
 })
 export class CollectionPointsEditComponent implements OnInit {
 
-  constructor(private route : ActivatedRoute,     
-    private router : Router , private collectionPointservice : CollectionPointservice ,private dataStorageService : DataStorageService) { }
+  constructor(private route: ActivatedRoute,
+    private router: Router, private collectionPointservice: CollectionPointservice, private dataStorageService: DataStorageService) { }
 
-    id : number;
-    editMode : boolean = false;
-    collectionPointForm : FormGroup;
+  id: number;
+  editMode: boolean = false;
+  collectionPointForm: FormGroup;
 
   ngOnInit() {
     this.route.params.subscribe(
-      (param:Params)=>{
-         this.id = +param['id'];
-         this.editMode =param['id'] != null; 
-         this.intiForm();
-         //console.log("Edit Mode "+ this.editMode);
+      (param: Params) => {
+        this.id = +param['id'];
+        this.editMode = param['id'] != null;
+        this.intiForm();
+        //console.log("Edit Mode "+ this.editMode);
       }
     );
   }
 
   onSubmit() {
-    if(this.editMode){
-      this.collectionPointservice.updateCollectionPoints(this.id,this.collectionPointForm.value);
+    if (this.editMode) {
+      this.collectionPointservice.updateCollectionPoints(this.id, this.collectionPointForm.value);
       this.dataStorageService.storeCollectionPoints().subscribe(
-        (response : Response)=>{
+        (response: Response) => {
           console.log(response);
         }
       );
-    }else{
+    } else {
       this.collectionPointservice.addCollectionPoint(this.collectionPointForm.value);
       this.dataStorageService.storeCollectionPoints().subscribe(
-        (response : Response)=>{
+        (response: Response) => {
           console.log(response);
         }
       );
@@ -49,68 +49,77 @@ export class CollectionPointsEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['../'],{relativeTo:this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   getContactDetailsControls() {
-    return (<FormArray>this.collectionPointForm.get('contactDetails')).controls;
+    var data = (<FormArray>this.collectionPointForm.get('contactDetails')).controls;
+    return data;
   }
 
   getCollectableMaterialsControls() {
-    return (<FormArray>this.collectionPointForm.get('collectableMaterials')).controls;
+    var data = (<FormArray>this.collectionPointForm.get('collectableMaterials')).controls;
+    return data;
   }
 
-  private intiForm() {  
-    let collector  ='';   
-    let address  ='';  
-    let latitude  = 0;
-    let longitude  = 0; 
-    let imgPath  ='';
-    let contactDetails  = new FormArray([]);
+  private intiForm() {
+    let collector = '';
+    let address = '';
+    let latitude = 0;
+    let longitude = 0;
+    let imgPath = '';
+    let contactDetails = new FormArray([]);
     let collectableMaterials = new FormArray([]);
 
-    if(this.editMode){
+    if (this.editMode) {
       const collectionPoints = this.collectionPointservice.getCollectionPointById(this.id);
-      collector = collectionPoints.collector;
-      address= collectionPoints.address;
-      latitude= collectionPoints.latitude;
-      longitude= collectionPoints.longitude;
-      imgPath= collectionPoints.imgPath;      
-      if(collectionPoints['contactDetails']) {
-        for(let contactDetail of collectionPoints.contactDetails){
-          contactDetails.push(
-            new FormGroup({
-              'contact' : new FormControl(contactDetail.contact, Validators.required),              
-            })
-          );
+
+      if (collectionPoints === null || collectionPoints === undefined) {
+        this.router.navigate(['../'], { relativeTo: this.route });
+
+      } else {
+        collector = collectionPoints.collector;
+        address = collectionPoints.address;
+        latitude = collectionPoints.latitude;
+        longitude = collectionPoints.longitude;
+        imgPath = collectionPoints.imgPath;
+        if (collectionPoints['contactDetails']) {
+          for (let contactDetail of collectionPoints.contactDetails) {
+            contactDetails.push(
+              new FormGroup({
+                'contact': new FormControl(contactDetail.contact, Validators.required),
+              })
+            );
+          }
+        }
+        if (collectionPoints['collectableMaterials']) {
+          for (let collectableMaterial of collectionPoints.collectableMaterials) {
+            collectableMaterials.push(
+              new FormGroup({
+                'collectable_material': new FormControl(collectableMaterial.collectable_material, Validators.required),
+              })
+            );
+          }
         }
       }
-      if(collectionPoints['collectableMaterials']) {
-        for(let collectableMaterial of collectionPoints.collectableMaterials){
-          collectableMaterials.push(
-            new FormGroup({
-              'collectable_material' : new FormControl(collectableMaterial.collectable_material, Validators.required),              
-            })
-          );
-        }
-      }      
+
     }
 
     this.collectionPointForm = new FormGroup({
       'collector': new FormControl(collector, Validators.required),
       'address': new FormControl(address, Validators.required),
       'latitude': new FormControl(latitude),
-      'longitude':new FormControl(longitude),
-      'imgPath':new FormControl(imgPath),
-      'contactDetails':contactDetails,
-      'collectableMaterials':collectableMaterials
-   });
+      'longitude': new FormControl(longitude),
+      'imgPath': new FormControl(imgPath),
+      'contactDetails': contactDetails,
+      'collectableMaterials': collectableMaterials
+    });
   }
-  
+
   onAddContactDetails() {
     (<FormArray>this.collectionPointForm.get('contactDetails')).push(
       new FormGroup({
-        'contact': new FormControl(null, Validators.required)        
+        'contact': new FormControl(null, Validators.required)
       })
     );
   }
@@ -118,7 +127,7 @@ export class CollectionPointsEditComponent implements OnInit {
   onAddCollectableMaterials() {
     (<FormArray>this.collectionPointForm.get('collectableMaterials')).push(
       new FormGroup({
-        'collectable-material': new FormControl(null, Validators.required)        
+        'collectable_material': new FormControl(null, Validators.required)
       })
     );
   }

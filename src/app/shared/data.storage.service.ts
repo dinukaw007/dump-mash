@@ -11,11 +11,11 @@ export class DataStorageService {
     constructor(private http: HttpClient, private collectionPointservice: CollectionPointservice) { }
 
     storeCollectionPoints() {
-        return this.http.put('https://[your-app-name].firebaseio.com/collection.json', this.collectionPointservice.getCollectionPoints());
+        return this.http.put('https://udemy-ng-http-7f499.firebaseio.com/collection.json', this.collectionPointservice.getCollectionPoints());
     }
 
     getCollectionPoints() {
-        return this.http.get('https://[your-app-name].firebaseio.com/collection.json')
+        return this.http.get('https://udemy-ng-http-7f499.firebaseio.com/collection.json')
             .pipe(map(
                 (collectionPointResponse: CollectionPoint[]) => {
                     const collectionPoints: CollectionPoint[] = collectionPointResponse;

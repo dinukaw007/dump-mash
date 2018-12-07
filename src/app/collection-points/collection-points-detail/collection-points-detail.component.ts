@@ -22,15 +22,23 @@ export class CollectionPointsDetailComponent implements OnInit {
       (param : Params)=>{
         this.id = +param['id'];
         this.collectionPoint = this.collectionPointservice.getCollectionPointById(this.id);
-
-        var mapProp = {
-          center: new google.maps.LatLng(this.collectionPoint.latitude, this.collectionPoint.longitude),
-          zoom: 15,         
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+        if(this.collectionPoint === null || this.collectionPoint === undefined){
+                this.router.navigate(['../'],{relativeTo:this.route})
+        }        
       }
     );
+  }
+
+  ngAfterViewInit(){
+    if(this.collectionPoint){
+      var mapProp = {
+        center: new google.maps.LatLng(this.collectionPoint.latitude, this.collectionPoint.longitude),
+        zoom: 15,         
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    }    
+    
   }
 
   onEdit(){
