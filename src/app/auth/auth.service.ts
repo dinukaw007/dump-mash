@@ -55,12 +55,9 @@ export class AuthService {
                 token => this.token = token
             )
         return this.token;
-
-
     }
 
-    isAuthenticated() {
-        
+    isAuthenticated() {        
         if(this.token === '' || this.token === null){
             return false;
         }else{

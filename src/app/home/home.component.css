@@ -1,8 +1,21 @@
-.jumbotron {
+/* .jumbotron {
     background: url('../../assets/img/cover.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
     height: 350px;
- }
+ } */
+
+ .jumbotron {
+    background-image: url("../../assets/img/cover.png");
+    background-color: white;
+    margin-bottom: 0;
+    min-height: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+    color: white;
+    text-shadow: #444 0 1px 1px;
+}
