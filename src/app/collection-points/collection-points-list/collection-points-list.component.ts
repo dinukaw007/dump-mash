@@ -13,16 +13,25 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class CollectionPointsListComponent implements OnInit, OnDestroy {
   collectionPointSubscription: Subscription;
+  private isMobileResolution: boolean;
   constructor(private collectionPointservice: CollectionPointservice, 
     private router: Router, 
     private route: ActivatedRoute, 
     private dataStorageService: DataStorageService,
-    public authService :AuthService) { }
+    public authService :AuthService) { 
+     
+    }
+   
   collectionPoints: CollectionPoint[];
   collectableMaterialsStatus: string = '';
   locationValue: string = '';
   isDataAvailable: boolean = false;
 
+  getIsMobileResolution(): boolean {
+    return this.isMobileResolution;
+  }
+
+  
   ngOnInit() {
     this.collectionPointSubscription = this.collectionPointservice.collectionPointChanged.subscribe(
       (collectionPoints: CollectionPoint[]) => {
@@ -31,7 +40,13 @@ export class CollectionPointsListComponent implements OnInit, OnDestroy {
       }
     );
     //his.collectionPoints = this.collectionPointservice.getCollectionPoints();
-    this.dataStorageService.getCollectionPoints()
+    this.dataStorageService.getCollectionPoints();
+
+    if (window.innerWidth <= 1024) {
+      this.isMobileResolution = true;
+    } else {
+      this.isMobileResolution = false;
+    }
   }
 
   onFetchData() {
