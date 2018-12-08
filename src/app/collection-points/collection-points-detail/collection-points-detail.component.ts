@@ -10,58 +10,69 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./collection-points-detail.component.css']
 })
 export class CollectionPointsDetailComponent implements OnInit {
- 
-  @ViewChild('gmap') gmapElement: any;
-  map: google.maps.Map;  
-  id:number;
-  @Input() collectionPoint: CollectionPoint;
-  constructor(private route : ActivatedRoute,
-    private router : Router , 
-    private collectionPointservice : CollectionPointservice,
-    public authService :AuthService) { }
 
-  ngOnInit() {   
+  @ViewChild('gmap') gmapElement: any;
+  map: google.maps.Map;
+  id: number;
+  islocationAvalable: boolean = false;
+  @Input() collectionPoint: CollectionPoint;
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private collectionPointservice: CollectionPointservice,
+    public authService: AuthService) { }
+
+  ngOnInit() {
     this.route.params.subscribe(
-      (param : Params)=>{
+      (param: Params) => {
         this.id = +param['id'];
         this.collectionPoint = this.collectionPointservice.getCollectionPointById(this.id);
-        if(this.collectionPoint === null || this.collectionPoint === undefined){
-                this.router.navigate(['../'],{relativeTo:this.route})
+        if (this.collectionPoint === null || this.collectionPoint === undefined) {
+          this.router.navigate(['../'], { relativeTo: this.route })
         }
-        
-        if(this.collectionPoint){
+
+        if (this.collectionPoint) {
+
+          if (this.collectionPoint.latitude === 0 && this.collectionPoint.longitude === 0) {
+            this.islocationAvalable = false;   
+          } else {
+            this.islocationAvalable = true;            
+          }
+
           var mapProp = {
             center: new google.maps.LatLng(this.collectionPoint.latitude, this.collectionPoint.longitude),
-            zoom: 15,         
+            zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
-          var myLatLng = {lat: this.collectionPoint.latitude, lng: this.collectionPoint.longitude};  
-          
+          var myLatLng = { lat: this.collectionPoint.latitude, lng: this.collectionPoint.longitude };
+
           this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
 
           //var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-          var image = '../../../assets/img/bio_garbage_bag_map.png';         
-          
+          var image = '../../../assets/img/bio_garbage_bag_map.png';
+
           var marker = new google.maps.Marker({
             position: myLatLng,
-            map: this.map ,
+            map: this.map,
             animation: google.maps.Animation.DROP,
             title: this.collectionPoint.address,
-            icon:image
-          });  
-                    
-        }   
+            icon: image
+          });
+
+
+        }
       }
     );
   }
 
-    
-
-  ngAfterViewInit(){
+  getIslocationAvalable() {
+    return this.islocationAvalable;
   }
 
-  onEdit(){
-    this.router.navigate(['../',this.id,'edit'],{relativeTo:this.route})
+  ngAfterViewInit() {
   }
-  
+
+  onEdit() {
+    this.router.navigate(['../', this.id, 'edit'], { relativeTo: this.route })
+  }
+
 }

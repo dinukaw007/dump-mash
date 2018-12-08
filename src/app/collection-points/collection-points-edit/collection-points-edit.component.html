@@ -28,11 +28,17 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div class="form-group">            
+          <div class="form-group">
             <label for="name">City</label>
             <input type="text" id="city" name="city" class="form-control" formControlName="city">
             <label for="name">Province</label>
-            <input type="text" id="province" name="province" class="form-control" formControlName="province">           
+            <!-- <input type="text" id="province" name="province" class="form-control" formControlName="province">  
+                      -->
+            <select class="form-control form-control" placeholder="Enter Location" id="province"
+              formControlName="province">
+              <option value="" disabled selected>Select province</option>
+              <option *ngFor="let provience of provienceArray" [value]="provience">{{provience}}</option>              
+            </select>
           </div>
         </div>
       </div>
@@ -60,7 +66,7 @@
         <div class="col-md-6" style="padding-bottom:10px">
           <button class="btn btn-success btn-sm" type="button" (click)="onAddContactDetails()">Add Contact Details</button>
         </div>
-        <br/>
+        <br />
         <div class="col-md-6">
           <button class="btn btn-success  btn-sm" type="button" (click)="onAddCollectableMaterials()">Add Collectable
             Material</button>

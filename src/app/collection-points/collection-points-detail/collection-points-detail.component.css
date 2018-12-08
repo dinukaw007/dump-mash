@@ -1,0 +1,7 @@
+.map-hide {
+    visibility: hidden;
+}
+
+.map-show {
+    visibility: initial;
+}

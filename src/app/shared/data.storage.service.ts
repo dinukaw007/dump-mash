@@ -9,8 +9,18 @@ import { AuthService } from './../auth/auth.service';
 export class DataStorageService {
 
     constructor(private http: HttpClient, private collectionPointservice: CollectionPointservice, private authService: AuthService) { }
-    
-    private firebaseBaseUrl : string = '[firbase_database_base_url]';
+    private provinceArray : string[] = [
+        'Central',
+        'Eastern',
+        'North Central',
+        'North Western',
+        'Northern',
+        'Sabaragamuwa',
+        'Southern',
+        'Uva',
+        'Western'
+    ]
+    private firebaseBaseUrl : string = 'https://dumpmash-dbstore.firebaseio.com/';
     
     storeCollectionPoints() {
         const token = this.authService.getToken();
@@ -48,6 +58,10 @@ export class DataStorageService {
                     
                 }
             );
+    }
+
+    getProvince(){
+        return this.provinceArray.slice();
     }
 
 

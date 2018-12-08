@@ -21,12 +21,13 @@ export class CollectionPointsEditComponent implements OnInit {
   id: number;
   editMode: boolean = false;
   collectionPointForm: FormGroup;
-
+  provienceArray : string[] = [];
   ngOnInit() {
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
         this.editMode = param['id'] != null;
+        this.provienceArray =this.dataStorageService.getProvince();
         this.intiForm();
         //console.log("Edit Mode "+ this.editMode);
       }
@@ -116,8 +117,8 @@ export class CollectionPointsEditComponent implements OnInit {
     this.collectionPointForm = new FormGroup({
       'collector': new FormControl(collector, Validators.required),
       'address': new FormControl(address, Validators.required),
-      'city': new FormControl(city,),
-      'province': new FormControl(province,),
+      'city': new FormControl(city, Validators.required),
+      'province': new FormControl(province, Validators.required),
       'latitude': new FormControl(latitude),
       'longitude': new FormControl(longitude),
       'imgPath': new FormControl(imgPath),
