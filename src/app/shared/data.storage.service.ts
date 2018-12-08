@@ -9,32 +9,41 @@ import { AuthService } from './../auth/auth.service';
 export class DataStorageService {
 
     constructor(private http: HttpClient, private collectionPointservice: CollectionPointservice, private authService: AuthService) { }
-
+    private firebaseBaseUrl : string = '[firbase_database_base_url]';
     storeCollectionPoints() {
         const token = this.authService.getToken();
-        return this.http.put('https://udemy-ng-http-7f499.firebaseio.com/collection.json?auth='+token, this.collectionPointservice.getCollectionPoints());
+        return this.http.put(this.firebaseBaseUrl+'collection.json?auth='+token, this.collectionPointservice.getCollectionPoints());
     }
 
     getCollectionPoints() {
         //const token = this.authService.getToken();
-        return this.http.get('https://udemy-ng-http-7f499.firebaseio.com/collection.json')
+        return this.http.get(this.firebaseBaseUrl+'collection.json')
             .pipe(map(
                 (collectionPointResponse: CollectionPoint[]) => {
                     const collectionPoints: CollectionPoint[] = collectionPointResponse;
-                    for (let collectionPoint of collectionPoints) {
-                        if (!collectionPoint['contactDetails']) {
-                            collectionPoint['contactDetails'] = [];
+                    if(collectionPoints !== null){
+                        for (let collectionPoint of collectionPoints) {
+                            if (!collectionPoint['contactDetails']) {
+                                collectionPoint['contactDetails'] = [];
+                            }
+                            if (!collectionPoint['collectableMaterials']) {
+                                collectionPoint['collectableMaterials'] = [];
+                            }
                         }
-                        if (!collectionPoint['collectableMaterials']) {
-                            collectionPoint['collectableMaterials'] = [];
-                        }
-                    }
+                    }else{
+                        console.log("Something went wrong");
+                    }                   
                     return collectionPoints;
                 }
             ))
             .subscribe(
                 (collectionPoints: CollectionPoint[]) => {
-                    this.collectionPointservice.setCollectionPoints(collectionPoints);
+                    if(collectionPoints !== null){
+                        this.collectionPointservice.setCollectionPoints(collectionPoints);
+                    }else{
+                        console.log("Something went wrong");
+                    }
+                    
                 }
             );
     }

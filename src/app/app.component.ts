@@ -10,10 +10,10 @@ import 'firebase/auth'
 export class AppComponent implements OnInit {
   title = 'dump-mash';
 
-  ngOnInit(){
+  ngOnInit() {
     firebase.initializeApp({
-      apiKey: "",
-      authDomain: ""
+      apiKey: "[apiKey]",
+      authDomain: "[authDomain]",
     });
   }
 }

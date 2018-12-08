@@ -73,7 +73,7 @@ export class CollectionPointsEditComponent implements OnInit {
     let province = '';
     let latitude = 0;
     let longitude = 0;
-    let imgPath = '';
+    let imgPath = '../../../../assets/img/Environmental-awareness.png';
     let contactDetails = new FormArray([]);
     let collectableMaterials = new FormArray([]);
 
