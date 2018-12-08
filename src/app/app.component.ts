@@ -17,3 +17,5 @@ export class AppComponent implements OnInit {
     });
   }
 }
+// apiKey: "[apiKey]",
+// authDomain: "[authDomain]",

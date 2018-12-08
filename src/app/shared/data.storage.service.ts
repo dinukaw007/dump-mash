@@ -9,6 +9,7 @@ import { AuthService } from './../auth/auth.service';
 export class DataStorageService {
 
     constructor(private http: HttpClient, private collectionPointservice: CollectionPointservice, private authService: AuthService) { }
+   
     private firebaseBaseUrl : string = '[firbase_database_base_url]';
     storeCollectionPoints() {
         const token = this.authService.getToken();
