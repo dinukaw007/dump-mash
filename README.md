@@ -17,3 +17,16 @@ To configure database add your firbase realtime database collection path at "sha
 ```
 private firebaseBaseUrl : string = '[firbase_database_base_url]';
 ```
+
+To configure google maps add google map api key index.html and app.module.ts
+
+```
+<script src="https://maps.googleapis.com/maps/api/js?key=[GOOGLE MAP API KEY]"></script>
+```
+```
+AgmCoreModule.forRoot({
+      apiKey: "[GOOGLE MAP API KEY]",
+      libraries: ["places"]
+    })
+```
+
