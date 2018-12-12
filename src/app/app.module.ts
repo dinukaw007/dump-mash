@@ -16,8 +16,7 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
 import { CollectionPointsModule } from './collection-points/collection-points.module';
-
-
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -30,6 +29,10 @@ import { CollectionPointsModule } from './collection-points/collection-points.mo
   ],
   imports: [
     CommonModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyBkK5DmOKIEqClSU9x45itgMJFfvEoVoLU",
+      libraries: ["places"]
+    }),
     BrowserModule,
     CollectionPointsModule,
     AppRoutingModule,

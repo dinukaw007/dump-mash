@@ -17,9 +17,15 @@
 </div>
 <br>
 <hr>
+
+<!-- <div  class="row">
+  <input type="text" autocorrect="off" autocapitalize="off" spellcheck="off" placeholder="search for location"  id="searchControl" name="searchControl" class="form-control" #search>
+</div> -->
 <div class="row">
   <div 
   [class]="getIslocationAvalable() ? 'col-md-12 map-show': 'col-md-12 map-hide'" >
     <div  #gmap style="width:100%;height:320px"></div>
   </div>
+
+  
 </div>

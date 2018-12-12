@@ -20,7 +20,7 @@ export class DataStorageService {
         'Uva',
         'Western'
     ]
-    private firebaseBaseUrl : string = 'https://dumpmash-dbstore.firebaseio.com/';
+    private firebaseBaseUrl : string = '[firbase_database_base_url]';
     
     storeCollectionPoints() {
         const token = this.authService.getToken();

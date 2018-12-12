@@ -1,9 +1,9 @@
 import { DataStorageService } from './../../shared/data.storage.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { CollectionPoint } from '../collection-point.model';
 import { CollectionPointservice } from '../collection-points.service';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -11,17 +11,20 @@ import { AuthService } from 'src/app/auth/auth.service';
   templateUrl: './collection-points-list.component.html',
   styleUrls: ['./collection-points-list.component.css']
 })
-export class CollectionPointsListComponent implements OnInit, OnDestroy {
+export class CollectionPointsListComponent implements OnInit, OnDestroy, AfterViewInit  {
   collectionPointSubscription: Subscription;
+  google_analytics: Subscription;
   private isMobileResolution: boolean;
-  constructor(private collectionPointservice: CollectionPointservice, 
-    private router: Router, 
-    private route: ActivatedRoute, 
+  constructor(private collectionPointservice: CollectionPointservice,
+    private router: Router,
+    private route: ActivatedRoute,
     private dataStorageService: DataStorageService,
-    public authService :AuthService) { 
-     
-    }
-   
+    public authService: AuthService) {
+
+    
+
+  }
+
   collectionPoints: CollectionPoint[];
   collectableMaterialsStatus: string = '';
   locationValue: string = '';
@@ -31,7 +34,7 @@ export class CollectionPointsListComponent implements OnInit, OnDestroy {
     return this.isMobileResolution;
   }
 
-  
+
   ngOnInit() {
     this.collectionPointSubscription = this.collectionPointservice.collectionPointChanged.subscribe(
       (collectionPoints: CollectionPoint[]) => {
@@ -53,11 +56,26 @@ export class CollectionPointsListComponent implements OnInit, OnDestroy {
     this.dataStorageService.getCollectionPoints();
   }
 
+  ngAfterViewInit(){
+    this.google_analytics = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        (<any>window).ga('set', 'page', event.urlAfterRedirects);
+        (<any>window).ga('send', 'pageview');
+      }
+    });
+  }
+
   onNewCollectionPoint() {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'navigation',
+      eventLabel: 'navigateLabel',
+      eventAction: 'navigate'      
+    });
     this.router.navigate(['new'], { relativeTo: this.route })
   }
 
   ngOnDestroy() {
     this.collectionPointSubscription.unsubscribe();
+    this.google_analytics.unsubscribe();
   }
 }

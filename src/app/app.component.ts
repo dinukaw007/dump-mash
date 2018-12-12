@@ -16,13 +16,15 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     firebase.initializeApp({
       apiKey: "[apiKey]",
-      authDomain: "[authDomain]",
+      authDomain:  "[authDomain]",
     });
     firebase.auth().onAuthStateChanged(
       authState => {
-        authState.getIdToken().then(
-          token => this.authService.token = token
-        )
+        if(authState !== null){
+          authState.getIdToken().then(
+            token => this.authService.token = token
+          )
+        }        
       }
     );
   }

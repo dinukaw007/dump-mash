@@ -1,17 +1,24 @@
 import { CollectionPointservice } from './../collection-points.service';
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Component, OnInit, Input, ViewChild, NgZone, OnDestroy, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router, Params, NavigationEnd } from '@angular/router';
 import { CollectionPoint } from '../collection-point.model';
 import { AuthService } from 'src/app/auth/auth.service';
+import { MapsAPILoader } from '@agm/core';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-collection-points-detail',
   templateUrl: './collection-points-detail.component.html',
   styleUrls: ['./collection-points-detail.component.css']
 })
-export class CollectionPointsDetailComponent implements OnInit {
-
+export class CollectionPointsDetailComponent implements OnInit, OnDestroy, AfterViewInit {
+  google_analytics: Subscription;
   @ViewChild('gmap') gmapElement: any;
+
+  @ViewChild('search') searchElementRef: any;
+
+
   map: google.maps.Map;
   id: number;
   islocationAvalable: boolean = false;
@@ -19,9 +26,19 @@ export class CollectionPointsDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private collectionPointservice: CollectionPointservice,
-    public authService: AuthService) { }
+    public authService: AuthService,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone) { }
 
+  public latitude: number;
+  public longitude: number;
+  public zoom: number;
   ngOnInit() {
+
+    this.zoom = 4;
+    this.latitude = 39.8282;
+    this.longitude = -98.5795;
+
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
@@ -33,9 +50,9 @@ export class CollectionPointsDetailComponent implements OnInit {
         if (this.collectionPoint) {
 
           if (this.collectionPoint.latitude === 0 && this.collectionPoint.longitude === 0) {
-            this.islocationAvalable = false;   
+            this.islocationAvalable = false;
           } else {
-            this.islocationAvalable = true;            
+            this.islocationAvalable = true;
           }
 
           var mapProp = {
@@ -58,6 +75,31 @@ export class CollectionPointsDetailComponent implements OnInit {
             icon: image
           });
 
+          /*
+          this.mapsAPILoader.load().then(() => {
+            let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+              types: ["address"]
+            });
+            autocomplete.addListener("place_changed", () => {
+              this.ngZone.run(() => {
+                //get the place result
+                let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+                //verify result
+                if (place.geometry === undefined || place.geometry === null) {
+                  return;
+                }
+
+                //set latitude, longitude and zoom
+                this.latitude = place.geometry.location.lat();
+                this.longitude = place.geometry.location.lng();
+                this.zoom = 12;
+              });
+            });
+
+          });
+
+          */
 
         }
       }
@@ -69,6 +111,16 @@ export class CollectionPointsDetailComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.google_analytics = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        (<any>window).ga('set', 'page', event.urlAfterRedirects);
+        (<any>window).ga('send', 'pageview');
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.google_analytics.unsubscribe();
   }
 
   onEdit() {

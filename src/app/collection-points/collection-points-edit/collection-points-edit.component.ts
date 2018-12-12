@@ -1,37 +1,53 @@
 import { DataStorageService } from './../../shared/data.storage.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { CollectionPointservice } from './../collection-points.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-collection-points-edit',
   templateUrl: './collection-points-edit.component.html',
   styleUrls: ['./collection-points-edit.component.css']
 })
-export class CollectionPointsEditComponent implements OnInit {
-
+export class CollectionPointsEditComponent implements OnInit, OnDestroy, AfterViewInit {
+  google_analytics: Subscription;
   constructor(private route: ActivatedRoute,
-    private router: Router, 
-    private collectionPointservice: CollectionPointservice, 
+    private router: Router,
+    private collectionPointservice: CollectionPointservice,
     private dataStorageService: DataStorageService,
-    public authService :AuthService) { }
+    public authService: AuthService) {
+
+  }
 
   id: number;
   editMode: boolean = false;
   collectionPointForm: FormGroup;
-  provienceArray : string[] = [];
+  provienceArray: string[] = [];
   ngOnInit() {
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
         this.editMode = param['id'] != null;
-        this.provienceArray =this.dataStorageService.getProvince();
+        this.provienceArray = this.dataStorageService.getProvince();
         this.intiForm();
         //console.log("Edit Mode "+ this.editMode);
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.google_analytics.unsubscribe();
+  }
+
+  ngAfterViewInit(){
+    this.google_analytics = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        (<any>window).ga('set', 'page', event.urlAfterRedirects);
+        (<any>window).ga('send', 'pageview');
+      }
+    });
   }
 
   onSubmit() {
