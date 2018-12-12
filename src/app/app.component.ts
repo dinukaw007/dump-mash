@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase/app';
 import 'firebase/auth'
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     firebase.initializeApp({
       apiKey: "[apiKey]",
-      authDomain:  "[authDomain]",
+      authDomain: "[authDomain]"
     });
     firebase.auth().onAuthStateChanged(
       authState => {

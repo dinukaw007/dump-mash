@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/auth/auth.service';
   templateUrl: './collection-points-list.component.html',
   styleUrls: ['./collection-points-list.component.css']
 })
-export class CollectionPointsListComponent implements OnInit, OnDestroy, AfterViewInit  {
+export class CollectionPointsListComponent implements OnInit, OnDestroy, AfterViewInit {
   collectionPointSubscription: Subscription;
   google_analytics: Subscription;
   private isMobileResolution: boolean;
@@ -21,7 +21,7 @@ export class CollectionPointsListComponent implements OnInit, OnDestroy, AfterVi
     private dataStorageService: DataStorageService,
     public authService: AuthService) {
 
-    
+
 
   }
 
@@ -56,7 +56,7 @@ export class CollectionPointsListComponent implements OnInit, OnDestroy, AfterVi
     this.dataStorageService.getCollectionPoints();
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.google_analytics = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         (<any>window).ga('set', 'page', event.urlAfterRedirects);
@@ -69,7 +69,7 @@ export class CollectionPointsListComponent implements OnInit, OnDestroy, AfterVi
     (<any>window).ga('send', 'event', {
       eventCategory: 'navigation',
       eventLabel: 'navigateLabel',
-      eventAction: 'navigate'      
+      eventAction: 'navigate'
     });
     this.router.navigate(['new'], { relativeTo: this.route })
   }

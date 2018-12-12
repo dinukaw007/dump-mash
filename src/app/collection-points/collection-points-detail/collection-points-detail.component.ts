@@ -20,7 +20,7 @@ export class CollectionPointsDetailComponent implements OnInit, OnDestroy, After
 
 
   map: google.maps.Map;
-  id: number;
+  id: string;
   islocationAvalable: boolean = false;
   @Input() collectionPoint: CollectionPoint;
   constructor(private route: ActivatedRoute,
@@ -41,7 +41,7 @@ export class CollectionPointsDetailComponent implements OnInit, OnDestroy, After
 
     this.route.params.subscribe(
       (param: Params) => {
-        this.id = +param['id'];
+        this.id = param['id'];
         this.collectionPoint = this.collectionPointservice.getCollectionPointById(this.id);
         if (this.collectionPoint === null || this.collectionPoint === undefined) {
           this.router.navigate(['../'], { relativeTo: this.route })

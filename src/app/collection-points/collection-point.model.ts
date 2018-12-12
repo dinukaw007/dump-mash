@@ -1,5 +1,7 @@
+import { Guid } from "guid-typescript";
 export class CollectionPoint {
 
+    public id: string;
     public collector: string;
     public contactDetails: CntactDetail[];
     public address: string;
@@ -11,6 +13,8 @@ export class CollectionPoint {
     public imgPath : string;   
      
     constructor(collector: string, contactDetails: CntactDetail[], address: string, collectableMaterials: CollectableMaterials[],latitude? : number ,longitude?: number,imgPath?: string,city?: string,province?: string) {
+        //let guid = Guid.create().toString();
+        //this.id = guid;
         this.collector = collector;
         this.contactDetails = contactDetails;
         this.address = address;

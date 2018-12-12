@@ -17,6 +17,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
 import { CollectionPointsModule } from './collection-points/collection-points.module';
 import { AgmCoreModule } from '@agm/core';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 @NgModule({
   declarations: [
@@ -30,13 +31,14 @@ import { AgmCoreModule } from '@agm/core';
   imports: [
     CommonModule,
     AgmCoreModule.forRoot({
-      apiKey: "AIzaSyBkK5DmOKIEqClSU9x45itgMJFfvEoVoLU",
+      apiKey: "[GOOGLE MAP API KEY]",
       libraries: ["places"]
     }),
     BrowserModule,
     CollectionPointsModule,
     AppRoutingModule,
     FormsModule,
+    DeviceDetectorModule.forRoot(),
     ReactiveFormsModule,
     HttpClientModule,   
     UiModule

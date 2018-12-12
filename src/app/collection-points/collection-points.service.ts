@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { CollectionPoint, CntactDetail, CollectableMaterials } from './collection-point.model';
 import { Subject } from 'rxjs/internal/Subject';
@@ -33,12 +34,17 @@ export class CollectionPointservice {
         return data;
     }
 
-    getCollectionPointById(index: number) {
+    getCollectionPointByIndex(index: number) {
         return this.collectionPoints[index];
     }
+    getCollectionPointById(id: string) {
+        return this.collectionPoints.find(x=>x.id ===id);
+    }
 
-    updateCollectionPoints(index: number, newCollectionPoint: CollectionPoint) {
-        this.collectionPoints[index] = newCollectionPoint;
+    updateCollectionPoints(id: string, newCollectionPoint: CollectionPoint) {
+        //let collectionPoint=  this.collectionPoints.find(x=>x.id ===id);
+        var foundIndex = this.collectionPoints.findIndex(x => x.id == id);
+        this.collectionPoints[foundIndex] = newCollectionPoint;        
         this.collectionPointChanged.next(this.collectionPoints.slice());
     }
 

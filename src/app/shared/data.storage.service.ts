@@ -9,7 +9,7 @@ import { AuthService } from './../auth/auth.service';
 export class DataStorageService {
 
     constructor(private http: HttpClient, private collectionPointservice: CollectionPointservice, private authService: AuthService) { }
-    private provinceArray : string[] = [
+    private provinceArray: string[] = [
         'Central',
         'Eastern',
         'North Central',
@@ -20,20 +20,21 @@ export class DataStorageService {
         'Uva',
         'Western'
     ]
+    
     private firebaseBaseUrl : string = '[firbase_database_base_url]';
     
     storeCollectionPoints() {
         const token = this.authService.getToken();
-        return this.http.put(this.firebaseBaseUrl+'collection.json?auth='+token, this.collectionPointservice.getCollectionPoints());
+        return this.http.put(this.firebaseBaseUrl + 'collection.json?auth=' + token, this.collectionPointservice.getCollectionPoints());
     }
 
     getCollectionPoints() {
         //const token = this.authService.getToken();
-        return this.http.get(this.firebaseBaseUrl+'collection.json')
+        return this.http.get(this.firebaseBaseUrl + 'collection.json')
             .pipe(map(
                 (collectionPointResponse: CollectionPoint[]) => {
                     const collectionPoints: CollectionPoint[] = collectionPointResponse;
-                    if(collectionPoints !== null){
+                    if (collectionPoints !== null) {
                         for (let collectionPoint of collectionPoints) {
                             if (!collectionPoint['contactDetails']) {
                                 collectionPoint['contactDetails'] = [];
@@ -42,25 +43,25 @@ export class DataStorageService {
                                 collectionPoint['collectableMaterials'] = [];
                             }
                         }
-                    }else{
+                    } else {
                         console.log("Something went wrong");
-                    }                   
+                    }
                     return collectionPoints;
                 }
             ))
             .subscribe(
                 (collectionPoints: CollectionPoint[]) => {
-                    if(collectionPoints !== null){
+                    if (collectionPoints !== null) {
                         this.collectionPointservice.setCollectionPoints(collectionPoints);
-                    }else{
+                    } else {
                         console.log("Something went wrong");
                     }
-                    
+
                 }
             );
     }
 
-    getProvince(){
+    getProvince() {
         return this.provinceArray.slice();
     }
 

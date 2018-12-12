@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { CollectionPointservice } from './../collection-points.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-collection-points-edit',
@@ -21,14 +22,14 @@ export class CollectionPointsEditComponent implements OnInit, OnDestroy, AfterVi
 
   }
 
-  id: number;
+  id: string;
   editMode: boolean = false;
   collectionPointForm: FormGroup;
   provienceArray: string[] = [];
   ngOnInit() {
     this.route.params.subscribe(
       (param: Params) => {
-        this.id = +param['id'];
+        this.id = param['id'];
         this.editMode = param['id'] != null;
         this.provienceArray = this.dataStorageService.getProvince();
         this.intiForm();
@@ -41,7 +42,7 @@ export class CollectionPointsEditComponent implements OnInit, OnDestroy, AfterVi
     this.google_analytics.unsubscribe();
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.google_analytics = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         (<any>window).ga('set', 'page', event.urlAfterRedirects);
@@ -84,6 +85,7 @@ export class CollectionPointsEditComponent implements OnInit, OnDestroy, AfterVi
   }
 
   private intiForm() {
+    let id =  Guid.create().toString();
     let collector = '';
     let address = '';
     let city = '';
@@ -108,6 +110,7 @@ export class CollectionPointsEditComponent implements OnInit, OnDestroy, AfterVi
         latitude = collectionPoints.latitude;
         longitude = collectionPoints.longitude;
         imgPath = collectionPoints.imgPath;
+        id = collectionPoints.id;
         if (collectionPoints['contactDetails']) {
           for (let contactDetail of collectionPoints.contactDetails) {
             contactDetails.push(
@@ -139,7 +142,8 @@ export class CollectionPointsEditComponent implements OnInit, OnDestroy, AfterVi
       'longitude': new FormControl(longitude),
       'imgPath': new FormControl(imgPath),
       'contactDetails': contactDetails,
-      'collectableMaterials': collectableMaterials
+      'collectableMaterials': collectableMaterials,
+      'id': new FormControl(id),
     });
   }
 
